@@ -9,3 +9,23 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+
+model Student {
+  id        Int      @id @default(autoincrement())
+  fullname  String
+  email     String   @unique
+  password  String
+  birthDate DateTime
+  gender    String
+  gpaScore  Decimal
+  university   University? @relation(fields: [universityId], references: [id])
+  universityId Int?
+}
+
+model University {
+  id     Int     @id @default(autoincrement())
+  name   String
+  minGpa Decimal
+  Student Student[]
+}
