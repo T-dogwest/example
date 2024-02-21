@@ -1,13 +1,19 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
-async function main(){
+import { faker } from '@faker-js/faker';
+import { max } from 'class-validator';
+async function main() {
     try {
-        await prisma.university.create({
-            data: {
-                name: "MIT",
-                minGpa: "4.2"
-            }
-        })
+        for (let i = 0; i < 20; i++) {
+
+
+            await prisma.university.create({
+                data: {
+                    name: faker.location.city()+' '+faker.word.words({count:{min:1,max:2}}),
+                    minGpa: faker.number.float({min:3,max:5,fractionDigits:1})
+                }
+            })
+        }
     } finally {
         prisma.$disconnect();
     }
